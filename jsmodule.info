@@ -1,0 +1,10 @@
+name = jsmodule
+description = Example Module to show how to add new JS library and admin config
+core = 7.x
+files[] = jsmodule.module
+package = User interface
+
+configure = admin/config/user-interface/jsmodule
+
+core = "7.x"
+project = "jsmodule"

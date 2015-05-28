@@ -1,0 +1,82 @@
+<?php
+/**
+ * @file
+ *
+ *
+ * Orginal waypoints module work done by Kálmán Hosszu - hosszu.kalman@gmail.com - http://www.kalman-hosszu.com
+ *
+ * Hacking and converting to demo done by @author Mark W. Breneman
+ * This example is intended mostly for my own notes, but use it as you wish.
+ *
+ */
+
+/* ====================== */
+/* ==== DRUPAL HOOKS ==== */
+/* ====================== */
+
+/**
+ * Implement of hook_menu().
+ *
+ * @return
+ *   An array of menu items.
+ */
+function jsmodule_menu() {
+  $items = array();
+
+  $items['admin/config/user-interface/jsmodule'] = array(
+    'title' => 'jQuery jsmodule',
+    'description' => 'Configure jsmodule module.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('jsmodule_settings_form'),
+    'access arguments' => array('configure jsmodule module'),
+    'file' => 'includes/jsmodule.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implement of hook_permission().
+ *
+ * @return array
+ *   An array of valid permissions for the browserclass module
+ */
+function jsmodule_permission() {
+  return array(
+    'configure jsmodule module' => array(
+      'title' => 'Configure jsmodule module',
+      'description' => 'Configure jsmodule module, set JavaScript operation.',
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implement of hook_init().
+ */
+function jsmodule_init() {
+  if (variable_get('jsmodule_always_add_js')) {
+    drupal_add_library('jsmodule', 'jsmodule');
+  }
+}
+
+/**
+ * Implement hook_library().
+ *
+ * @return array
+ *   An array defining libraries associated with a module.
+ */
+function jsmodule_library() {
+  $libraries = array();
+
+  $libraries['jsmodule'] = array(
+    'title' => 'jQuery jsmodule',
+    'website' => 'http://github.com/',
+    'version' => '1.0.2',
+    'js' => array(
+      drupal_get_path('module', 'jsmodule') . '/js/jsmodule.js' => array(),
+    ),
+  );
+
+  return $libraries;
+}
